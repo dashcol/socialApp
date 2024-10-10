@@ -1,3 +1,5 @@
+import { ApplicationError } from "../../../error-handlers/application.error.js";
+
 export default class UserPosts{
 constructor(id,title,image,desc,comments,likes,type,user){
     this.id=id;
@@ -21,11 +23,19 @@ static addPosts(newPost, userEmail) {
 
 
 static getPost(user) {
-    return posts.filter(f => f.user === user); 
+    const userPost= posts.filter(f => f.user === user); 
+    if(!userPost){
+        throw new ApplicationError("Post Not Found",404)
+    }
+    return userPost ;
    
 }
 static getPostById(user,postId){
-    return posts.find(f=>f.user===user && f.id === parseInt(postId, 10))
+const userPostId= posts.find(f=>f.user===user && f.id === parseInt(postId, 10));
+if(!userPostId){
+    throw new ApplicationError("Post for User Not Found",404)
+}
+return userPostId;
 }
 
 }

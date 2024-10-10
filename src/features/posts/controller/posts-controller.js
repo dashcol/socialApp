@@ -7,7 +7,6 @@ export default class PostsController{
    try {   
      const email=req.user.email;
         const result= UserPosts.getPost(email); 
-console.log(email);
 
         if (!result || result.length === 0) {
             return res.status(404).json({ message: "No posts found for this user" });
@@ -16,9 +15,8 @@ console.log(email);
 
     }
 
-
     catch(err){
-        return res.status(500).json({ error: "An error occurred while retrieving posts" });
+         return res.status(404).json({ message: err.message });
     }
 }
 
@@ -47,7 +45,7 @@ if(!result){
 }
 return res.status(200).json(result)
     }catch(err){
-        return res.status(500).json({ error: "An error occurred while retrieving the post" });
+        return res.status(404).json({ message: err.message });
     }
 }
 }

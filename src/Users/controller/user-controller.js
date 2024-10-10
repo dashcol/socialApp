@@ -17,14 +17,15 @@ async signUp(req,res){
     res.status(201).send(user)
   
 }catch(err){
-    console.error(err);
-    res.status(500).json({ error: "An error occurred during sign-up" });
+    
+    res.status(500).json({ message: err.message });
 }
 
 }
 
 
 signIn(req,res){
+    try{
     const {email,password}=req.body;
     const user=UserModel.signIn(email,password);
     if(user){
@@ -42,6 +43,9 @@ signIn(req,res){
     }else{
         res.status(400).send("Incorrect Credentials");
     }
+}catch(err){
+    res.status(500).json({ message: err.message });
+}
 }
 
 }

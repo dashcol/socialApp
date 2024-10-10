@@ -1,10 +1,12 @@
+import { log } from "../../../middlewares/logger.middleware.js";
 import UserPosts from "../../posts/model/posts-model.js";
 import { posts } from "../../posts/model/posts-model.js";
 
 export default class deletePosts{
 
 
-    deletePosts(req,res){
+    deletePosts(req,res,next){
+        try{
         const email=req.user.email;
         const {id}=req.params;
 
@@ -29,6 +31,10 @@ export default class deletePosts{
             return res.status(200).json({ message: "Post deleted successfully",userPosts });
         
 
-    
+        }catch(err){
+            console.log("passing error to middleware from delete-controller");
+            
+             next();
+        }
     }
 }

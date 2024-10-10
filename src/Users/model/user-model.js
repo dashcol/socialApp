@@ -1,3 +1,5 @@
+import { ApplicationError } from "../../error-handlers/application.error.js";
+
 export default class UserModel{
     constructor(id,name,email,password,type){
         this.id=id;
@@ -11,6 +13,9 @@ export default class UserModel{
 // STATIC FUNCTION FOR SIGN UP
 static signUp(name,email,password,type){
 const id=users.length+1;
+if(!name || !email || !password || !type){
+    throw new ApplicationError("Please enter Details",400)
+}
 const newUser= new UserModel(id,name,email,password,type)
 users.push(newUser);
 return newUser
@@ -20,6 +25,9 @@ return newUser
 // STATIC FUNCTION FOR SIGN IN
 static signIn(email,password){
     const result= users.find(f=>f.email==email && f.password==password);
+    if(!result){
+        throw new ApplicationError("Invalid Credentilas",400)
+    }
     return result;
 }
 
