@@ -40,7 +40,7 @@ app.use(async(err,req,res,next)=>{
 
 
 app.use((req,res)=>{
-    res.status(404).send(" Not Found. Please check. localhost:3000/api-docs")
+    res.status(404).send(" Not Found. Please check... localhost:3000/api-docs")
 })
 
 
